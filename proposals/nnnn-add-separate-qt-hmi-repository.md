@@ -1,5 +1,4 @@
-```
-# Feature name
+# Add Separate QT HMI Repository
 
 * Proposal: [SDL-NNNN](NNNN-Add-Separate-QT-HMI-Repository.md)
 * Author: [BrandonHe](https://github.com/BrandonHe)
@@ -45,4 +44,3 @@ N/A.
 ## Alternatives considered
 
 The alternative solution is to update and maintain the component QT HMI in a separate repository as proposed by [SDL-0110](https://github.com/smartdevicelink/sdl_evolution/blob/master/proposals/0110-remove-qt-hmi-from-sdl-core.md#alternatives-considered). But that's require quite a lot of more work to accomplish.
-```
