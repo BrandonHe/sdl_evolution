@@ -23,13 +23,16 @@ The proposed solution to this issue is to add a new separate Qt HMI repository, 
 
 There already have two Qt HMI repositories existed in github APCVSRepo repository ([HMI_SDK](https://github.com/APCVSRepo/HMI_SDK) and [HMI_SDK_LIB](https://github.com/APCVSRepo/HMI_SDK_LIB)), both of them are works fine and meet the above requirements. Here in this proposal is to push the HMI_SDK_LIB repository as a sample HMI, because the second repository has encapsulated json data analysis, has realized a template management, which is very easy for a developer to extend a new template, it also supports the latest version of Gstreamer for software and hardware codec in video streaming. For demo pictures in Qt HMI, please refer to discussion in [issue comment](https://github.com/smartdevicelink/sdl_evolution/issues/335#issuecomment-343079628).
 
-This would not require quite a lot of work to accomplish from research and develop, Ford AP team can still help SDLC maintain this project in the future. The instruction document will be offered for developers to develop a customized Qt HMI as well as to integrate SDL Core with Qt HMI. Potential works are:
+This would not require quite a lot of work to accomplish from research and develop, Ford AP team can still help SDLC maintain this project in the future. The instruction document will also be offered for developers to develop a customized Qt HMI as well as to integrate SDL Core with Qt HMI. Potential works are:
 
 - Create a new Qt HMI repository in SmartDeviceLink
 - Make test case
 - Have a test 
 - Send pull request for code reveiw
 - Write document for instruction
+- Anything required for new repository
+
+Ford AP team has document of test case and test report during developing the Qt HMI, this may be a reference for SDLC.
 
 ## Potential downsides
 
@@ -40,5 +43,10 @@ This new Qt HMI repository is initially created for reference to AP SDL partners
 N/A.
 
 ## Alternatives considered
+Alternative 1:
 
-The alternative solution is to update and maintain the component Qt HMI in a separate repository as proposed by [SDL-0110](https://github.com/smartdevicelink/sdl_evolution/blob/master/proposals/0110-remove-qt-hmi-from-sdl-core.md#alternatives-considered). But that's require quite a lot of more work to accomplish.
+Create a Qt HMI linkage outside of SmartDeviceLink repository. This would make development work simple, just add a linkage in current SmartDeviceLink repository, but it's hard to have a good project maintaining, and also lack of good document support for English developers, questions and answers are not instant response for developers.
+
+Alternative 2:
+
+Update and maintain the component Qt HMI in a separate repository as proposed by [SDL-0110](https://github.com/smartdevicelink/sdl_evolution/blob/master/proposals/0110-remove-qt-hmi-from-sdl-core.md#alternatives-considered). But that's require quite a lot of more work to accomplish.
