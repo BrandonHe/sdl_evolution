@@ -1,7 +1,7 @@
 # Add SetMediaPlayMode
 
 * Proposal: [SDL-NNNN](NNNN-Add-setMediaPlayMode.md)
-* Author: [BrandonHe](https://github.com/brandonhe)
+* Author: [xxx](https://github.com/)
 * Status: **Awaiting review**
 * Impacted Platforms: [Core / iOS / Android / RPC / HMI]
 
