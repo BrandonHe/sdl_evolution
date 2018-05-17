@@ -45,7 +45,7 @@ Add `repeatMode` and `shuffleMode` mode and `setMediaPlayMode`
 <function name="SetMediaPlayMode” messagetype="request">
     <description>Sets the play mode of the media player.</description>
     <param name=“repeatMode” type="Common.RepeatMode" mandatory="false">
-      <description>Sets the repeat mode of the Media app connected via SDL. The available cycle mode is “ONE”, “LIST”, ALL” and “NOT_SUPPORT”.</description>
+      <description>Sets the repeat mode of the Media app connected via SDL. The available repeat mode is “ONE”, “LIST”, ALL” and “NOT_SUPPORT”.</description>
       <description>If this param is not provided, or is set to “NOT_SUPPORT”, the HU system may hide the button or set the button as unable.</description>
     </param>
     <param name=“shuffleMode" type="Common.ShuffleMode" mandatory=“false”>
@@ -62,7 +62,7 @@ Add `repeatMode` and `shuffleMode` mode and `setMediaPlayMode`
 <function name="OnMediaPlayModeChange” messagetype="notification">
     <description>Must be sent by HU system when the user clicks on buttons of play mode. One or both param below should be provided.</description>
     <param name="repeatMode" type="Common.RepeatMode" mandatory=“false”>
-      <description>The cycle mode which is supposed to be switched to.</description>
+      <description>The repeat mode which is supposed to be switched to.</description>
     </param>
     <param name="shuffleMode" type="Common.ShuffleMode" mandatory=“false”>
       <description>The shuffle mode which is supposed to be switched to.</description>
@@ -124,8 +124,8 @@ Range = 0x 0000 0001 - 0x 0000 7FFF
 
 <function name="OnMediaPlayModeChange” functionID="OnMediaPlayModeChangeID" messagetype="notification">
   <description>Must be sent by HU system when the user clicks on buttons of play mode. One or both param below should be provided.</description>
-  <param name="cycleMode" type="Common.RepeatMode" mandatory=“false”>
-    <description>The cycle mode which is supposed to be switched to.</description>
+  <param name="repeatMode" type="Common.RepeatMode" mandatory=“false”>
+    <description>The repeat mode which is supposed to be switched to.</description>
   </param>
   <param name="shuffleMode" type="Common.ShuffleMode" mandatory=“false”>
     <description>The shuffle mode which is supposed to be switched to.</description>
