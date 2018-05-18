@@ -7,18 +7,19 @@
 
 ## Introduction
 
-This proposal is about adding new function name SetMediaPlayMode.
+This proposal is about supporting media play mode by adding new RPC `SetMediaPlayMode`.
 
 ## Motivation
 
-Currently, if a SDL connected `AppHMIType` is `MEDIA`, SDL dosen't support media play mode setting. Media play mode is widely supported in media player, almost all devices (including SYNC) and apps are supporting this feature, shuffle mode and repeat mode are mostly used in media playback. This will help improve user experience.
+Currently, if a SDL connected `AppHMIType` is `MEDIA`, SDL dosen't support media play mode setting. Media play mode is widely supported in media player, almost all media devices (including SYNC) and music apps are supporting this feature, shuffle mode and repeat mode are mostly used in media playback. This will help improve user experience.
 
 ## Proposed solution
-When a new Media type mobile app connected HU via SDL, it sends RPC `setMediaPlayMode` request, if HU support this function, it will response `SUCCESS`, otherwise, it will reponse `INVALID_DATA`.
+
+The proposed solution to this issue is to add new RPC `SetMediaPlayMode`. When a new Media type mobile app connected HU via SDL, it would send request RPC `setMediaPlayMode`, if HU support this function, it will response `SUCCESS`, otherwise, it will reponse `INVALID_DATA`.
 
 ### HMI API
 
-Add `repeatMode` and `shuffleMode` mode and `setMediaPlayMode`
+Add new enum `repeatMode`, new enum `shuffleMode` and new function `setMediaPlayMode`to handle this two enums.
 ```xml
 <enum name="RepeatMode">
   <description>Sets the repeat mode of the media player.</description>
@@ -58,16 +59,6 @@ Add `repeatMode` and `shuffleMode` mode and `setMediaPlayMode`
 </function>
 <function name="SetMediaPlayMode" messagetype="response">
 </function>
-
-<function name="OnMediaPlayModeChange” messagetype="notification">
-    <description>Must be sent by HU system when the user clicks on buttons of play mode. One or both param below should be provided.</description>
-    <param name="repeatMode" type="Common.RepeatMode" mandatory=“false”>
-      <description>The repeat mode which is supposed to be switched to.</description>
-    </param>
-    <param name="shuffleMode" type="Common.ShuffleMode" mandatory=“false”>
-      <description>The shuffle mode which is supposed to be switched to.</description>
-    </param>
-  </function>
 ```
 
 ### MOBILE API
@@ -75,20 +66,35 @@ Add `repeatMode` and `shuffleMode` mode and `setMediaPlayMode`
 Add funcitonID in base request/response RPCs and Base Notifications, also add corresponding RPCs has added in HMI API
 
 ```xml
+
+<enum name="RepeatMode">
+  <description>Sets the repeat mode of the media player.</description>
+  <element name=“ONE” internal_name=“REPEAT_ONE">
+  </element>
+  <element name=“LIST” internal_name="REPEAT_LIST">
+  </element>
+  <element name=“ALL” internal_name="REPEAT_ALL">
+  </element>
+  <element name=“NOT_SUPPORT” internal_name="REPEAT_NOT_SUPPORT">
+  </element>
+</enum>
+
+<enum name=“ShuffleMode”>
+  <description>Sets the shuffle mode of the media player.</description>
+  <element name="OFF" internal_name=“SHUFFLE_OFF">
+  </element>
+  <element name="ON" internal_name="SHUFFLE_ON">
+  </element>
+  <element name="NOT_SUPPORT” internal_name="SHUFFLE_NOT_SUPPORT">
+  </element>
+</enum>
+
 <!--
 Base Request / Response RPCs
 Range = 0x 0000 0001 - 0x 0000 7FFF
 --> 
 <element name="SendHapticDataID" value="49" hexvalue="31" />
 <element name="SetMediaPlayModeID" value="50" hexvalue="32" />
-:
-<!--
- Base Notifications
- Range = 0x 0000 8000 - 0x 0000 FFFF
- -->
-
-<element name="OnWayPointChangeID" value="32784" hexvalue="8010" />
-<element name="OnMediaPlayModeChangeID" value="32785" hexvalue="8011" />
 
 <function name="SetMediaPlayMode" functionID="SetMediaPlayModeID" messagetype="request">
   <param name=“repeatMode” type="Common.repeatMode" mandatory="false">
@@ -122,15 +128,6 @@ Range = 0x 0000 0001 - 0x 0000 7FFF
   </param>
 </function>
 
-<function name="OnMediaPlayModeChange” functionID="OnMediaPlayModeChangeID" messagetype="notification">
-  <description>Must be sent by HU system when the user clicks on buttons of play mode. One or both param below should be provided.</description>
-  <param name="repeatMode" type="Common.RepeatMode" mandatory=“false”>
-    <description>The repeat mode which is supposed to be switched to.</description>
-  </param>
-  <param name="shuffleMode" type="Common.ShuffleMode" mandatory=“false”>
-    <description>The shuffle mode which is supposed to be switched to.</description>
-  </param>
-</function>
 ```
 
 ## Potential downsides
@@ -143,6 +140,6 @@ This should not have an impact on the existing code. Existing Media apps are not
 
 ## Alternatives considered
 
-The alternative proposed solution is to use existing `softButton` and `addCommand` to provide this function as a workaround. However, this would make a unclean API.
-- For `softButton`, user sends notificaiton from HMI to connected Media app, the player mode will change according to Media app response.
-- For `AddCommand`, user have to goto the Menu button and then choose the play mode.
+There have two alternative proposed solution to provide this function, one is to custom `SoftButton` and another is to add `AddSubMenu`.
+- For `SoftButton` solution, developers would define two softButton with name **Shuffle** and **Repeat**. Based on current template Media - with softButton, this is not a clear API, most apps doesn't support this function.
+- For `AddSubMenu` solution, developers would add a subMenu name **setMediaPlayMode** under **Menu** button, and then add **Shuffle Mod** and **Repeat Mode** under this subMenu. For this solution, users have to firstly goto the Menu button, then select subMenu **SetMediaPlayMode** and finally choose the play mode they want to change. This would not a good user experience design.
